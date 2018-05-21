@@ -4,12 +4,17 @@ export const setTasks = tasks => ({
 })
 
 export const addTodo = task => ({
-  type: 'ADD_TODO',
+  type: 'ADD_TASK',
   task
 })
 
-export const toggleTodo = task => ({
-  type: 'TOGGLE_TODO',
+export const toggleTask = task => ({
+  type: 'TOGGLE_TASK',
+  task
+})
+
+export const deleteTask = task => ({
+  type: 'DELETE_TASK',
   task
 })
 

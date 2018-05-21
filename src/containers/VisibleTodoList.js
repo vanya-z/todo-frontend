@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setTasks, toggleTodo, addAlert } from '../actions'
+import { setTasks, toggleTask, deleteTask, addAlert } from '../actions'
 import TodoList from '../components/TodoList'
 import { VisibilityFilters } from '../actions'
 import store from '../store'
@@ -17,6 +17,8 @@ const loadTasks = () => {
         store.dispatch(addAlert({type: 'danger', message: json.error}))
       })
     }
+  }, function(error) {
+    store.dispatch(addAlert({type: 'danger', message: error.message}))
   })
 }
 
@@ -38,18 +40,36 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  toggleTodo: id => {
+  toggleTask: id => {
     fetch(`${API_ROOT}/tasks/${id}/toggle`, {method: 'put'})
     .then(function(response) {
       if (response.ok) {
         response.json().then(json => {
-          dispatch(toggleTodo(json))
+          dispatch(toggleTask(json))
         })
       } else {
         response.json().then(json => {
           dispatch(addAlert({type: 'danger', message: json.error}))
         })
       }
+    }, function(error) {
+      dispatch(addAlert({type: 'danger', message: error.message}))
+    })
+  },
+  deleteTask: id => {
+    fetch(`${API_ROOT}/tasks/${id}`, {method: 'delete'})
+    .then(function(response) {
+      if (response.ok) {
+        response.json().then(json => {
+          dispatch(deleteTask(json))
+        })
+      } else {
+        response.json().then(json => {
+          dispatch(addAlert({type: 'danger', message: json.error}))
+        })
+      }
+    }, function(error) {
+      dispatch(addAlert({type: 'danger', message: error.message}))
     })
   }
 })

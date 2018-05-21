@@ -1,11 +1,10 @@
 import * as actions from './index'
 
 describe('todo actions', () => {
-  it('addTodo should create ADD_TODO action', () => {
-    expect(actions.addTodo('Use Redux')).toEqual({
-      type: 'ADD_TODO',
-      id: 0,
-      text: 'Use Redux'
+  it('addTodo should create ADD_TASK action', () => {
+    expect(actions.addTodo({title: 'Use Redux', id: 0})).toEqual({
+      task: {id: 0, title: "Use Redux"},
+      type: "ADD_TASK"
     })
   })
 
@@ -16,10 +15,13 @@ describe('todo actions', () => {
     })
   })
 
-  it('toggleTodo should create TOGGLE_TODO action', () => {
-    expect(actions.toggleTodo(1)).toEqual({
-      type: 'TOGGLE_TODO',
-      id: 1
+  it('toggleTask should create TOGGLE_TASK action', () => {
+    expect(actions.toggleTask({title: 'Use Redux', id: 1})).toEqual({
+      type: 'TOGGLE_TASK',
+      task: {
+        title: 'Use Redux',
+        id: 1
+      }
     })
   })
 })
